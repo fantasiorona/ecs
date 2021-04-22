@@ -1,0 +1,17 @@
+#!python
+import sys
+
+# Create the environment and create a Compilation Database for use in VSCodium
+env = DefaultEnvironment(tools=['default', 'compilation_db'])
+
+if sys.platform.startswith('linux') or sys.platform == 'darwin':
+    env.Append(CXXFLAGS = '-std=c++11 -O3')
+else:
+    host_platform = "Unknown platform: " + sys.platform
+    exit(1)
+    
+env.CompilationDatabase()
+
+target_name = 'ecs.out'
+
+Program(target_name, Glob('*.cpp'), LIBS=['sfml-graphics', 'sfml-window', 'sfml-system'])
