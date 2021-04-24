@@ -106,6 +106,7 @@ private:
 
   // Map of component types used by each entity to speed up registering entities with systems
 	robin_hood::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
+  
   std::vector<ECSSystem* > systems;
 
   // Entities that need to be registered or unregistered with systems because components were added or removed
