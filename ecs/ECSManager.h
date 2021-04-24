@@ -7,6 +7,8 @@
 #include "ECSSystem.h"
 #include "ComponentVector.h"
 
+const size_t MAX_ENTITIES = 500000;
+
 typedef size_t TypeHash;
 
 class ECSManager final
@@ -22,12 +24,13 @@ public:
 
   template<typename T>
   T& addComponent(EntityId entityId) {
+    // The component type is used as an index
     auto typeHash = typeid(T).hash_code();
     typesByEntity[entityId].insert(typeHash);
 
-    auto components = static_cast<ComponentVector<T>*>(componentsByType[typeHash]);
+    auto components = static_cast<ComponentVector<T, MAX_ENTITIES>*>(componentsByType[typeHash]);
     if (components == nullptr) {
-      components = new ComponentVector<T>();
+      components = new ComponentVector<T, MAX_ENTITIES>();
       componentsByType[typeHash] = components;
     }
 
@@ -51,7 +54,7 @@ public:
   template<typename T>
   T& getComponent(EntityId entityId) {
     auto typeHash = typeid(T).hash_code();
-    return static_cast<ComponentVector<T>*>(componentsByType[typeHash])->getComponent(entityId);
+    return static_cast<ComponentVector<T, MAX_ENTITIES>*>(componentsByType[typeHash])->getComponent(entityId);
   }
 
   template<typename T1, typename T2>

@@ -5,7 +5,7 @@
 void CircleMoveSystem::onUpdate(ECSManager& manager, float deltaTime) {
   for (auto& entity: getEntities()) {
     auto [transform, radius, bounds] = manager.getComponents<TransformComponent, RadiusComponent, BoundsComponent>(entity);
-
+    
     // calculate the next position
     auto nextPosition = transform.position + transform.velocity * deltaTime;
 

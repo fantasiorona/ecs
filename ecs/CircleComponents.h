@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <array>
 
 struct TransformComponent
 {
@@ -20,5 +21,5 @@ struct RadiusComponent
 
 struct BoundsComponent
 {
-	std::vector<std::pair<sf::Vector2f, float>> bounds;
+	std::array<std::pair<sf::Vector2f, float>, 4> bounds;
 };
