@@ -14,7 +14,7 @@ int main()
 {
     const unsigned int windowWidth = 1024;
     const unsigned int windowHeight = 768;
-    const unsigned int numEntities = 125000;
+    const unsigned int numEntities = 155000;
     const sf::Rect<float> bounds(0.f, 0.f, windowWidth, windowHeight);
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "ECS Moving Circles");
@@ -50,14 +50,12 @@ int main()
         transform.position = position;
         transform.velocity = velocity;
 
-        auto& radiusComponent = manager.addComponent<RadiusComponent>(entity);
-        radiusComponent.radius = radius;
-
         auto& colorComponent = manager.addComponent<ColorComponent>(entity);
         colorComponent.color = color;
 
-        auto& boundsComponent = manager.addComponent<BoundsComponent>(entity);
-        boundsComponent.bounds = {
+        auto& collisionComponent = manager.addComponent<CircleCollisionComponent>(entity);
+        collisionComponent.radius = radius;
+        collisionComponent.bounds = {
             std::make_pair(sf::Vector2f(0.f, 1.f), bounds.top),
             std::make_pair(sf::Vector2f(-1.f, 0.f), bounds.left + bounds.width),
             std::make_pair(sf::Vector2f(0.f, -1.f), bounds.top + bounds.height),

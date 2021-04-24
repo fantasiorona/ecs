@@ -1,9 +1,11 @@
 #pragma once
 
-#include <unordered_map>
 #include <memory>
 #include <tuple>
 
+// robin_hood.h contains a much faster hash map implementation compared
+// to "std::unordered_map" (see https://github.com/martinus/robin-hood-hashing)
+#include "robin_hood.h"
 #include "ECSSystem.h"
 #include "ComponentVector.h"
 
@@ -81,8 +83,8 @@ public:
 
 private:
   // The key is a hash of std::type_info
-	std::unordered_map<TypeHash, ComponentVectorBase*> componentsByType;
-	std::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
+	robin_hood::unordered_map<TypeHash, ComponentVectorBase*> componentsByType;
+	robin_hood::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
   std::vector<std::shared_ptr<ECSSystem> > systems;
 
   // Entities that need to be registered or unregistered with systems because

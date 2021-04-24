@@ -9,7 +9,7 @@
 class RenderSystem : public ECSSystem
 {
 public:
-  ENTITY_TYPE_FILTER(TransformComponent, ColorComponent, RadiusComponent, BoundsComponent)
+  ENTITY_TYPE_FILTER(TransformComponent, ColorComponent, CircleCollisionComponent)
 
   RenderSystem(sf::RenderWindow* window);
 

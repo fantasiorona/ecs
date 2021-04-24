@@ -4,15 +4,15 @@
 
 void CircleMoveSystem::onUpdate(ECSManager& manager, float deltaTime) {
   for (auto& entity: getEntities()) {
-    auto [transform, radius, bounds] = manager.getComponents<TransformComponent, RadiusComponent, BoundsComponent>(entity);
-    
+    auto [transform, collision] = manager.getComponents<TransformComponent, CircleCollisionComponent>(entity);
+
     // calculate the next position
     auto nextPosition = transform.position + transform.velocity * deltaTime;
 
     // check for a potential collision against all bounds
-    for (auto bound : bounds.bounds)
+    for (auto bound : collision.bounds)
     {
-      const sf::Vector3f l(bound.first.x, bound.first.y, bound.second - radius.radius);
+      const sf::Vector3f l(bound.first.x, bound.first.y, bound.second - collision.radius);
       const sf::Vector3f p1(nextPosition.x, nextPosition.y, 1.f);
 
       const auto distance = VectorMath::dot(p1, l);

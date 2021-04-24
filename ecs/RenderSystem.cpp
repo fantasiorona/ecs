@@ -24,14 +24,14 @@ void RenderSystem::onUpdate(ECSManager& manager, float deltaTime) {
   vertices.reserve(_kNumVertices * entities.size());
 
   for (auto& entity: entities) {
-    auto [transform, color, radius, bounds] = manager.getComponents<
-      TransformComponent, ColorComponent, RadiusComponent, BoundsComponent>(entity);
+    auto [transform, color, collision] = manager.getComponents<
+      TransformComponent, ColorComponent, CircleCollisionComponent>(entity);
 
     // generate the corner coordinates
-    const sf::Vector2f tl(transform.position.x - radius.radius, transform.position.y - radius.radius);
-    const sf::Vector2f tr(transform.position.x + radius.radius, transform.position.y - radius.radius);
-    const sf::Vector2f bl(transform.position.x - radius.radius, transform.position.y + radius.radius);
-    const sf::Vector2f br(transform.position.x + radius.radius, transform.position.y + radius.radius);
+    const sf::Vector2f tl(transform.position.x - collision.radius, transform.position.y - collision.radius);
+    const sf::Vector2f tr(transform.position.x + collision.radius, transform.position.y - collision.radius);
+    const sf::Vector2f bl(transform.position.x - collision.radius, transform.position.y + collision.radius);
+    const sf::Vector2f br(transform.position.x + collision.radius, transform.position.y + collision.radius);
 
     vertices.push_back(sf::Vertex(tl, color.color, uvTl));
     vertices.push_back(sf::Vertex(tr, color.color, uvTr));

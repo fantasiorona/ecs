@@ -14,12 +14,8 @@ struct ColorComponent
 	sf::Color color = {};
 };
 
-struct RadiusComponent
+struct CircleCollisionComponent
 {
 	float radius = 1.f;
-};
-
-struct BoundsComponent
-{
 	std::array<std::pair<sf::Vector2f, float>, 4> bounds;
 };
