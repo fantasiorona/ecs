@@ -15,4 +15,3 @@ private:
 	sf::Font _font;
 	sf::Text _stats;
 };
-

@@ -4,11 +4,13 @@
 #include "ColorPicker.h"
 
 #include "ECSManager.h"
+
 #include "CircleMoveSystem.h"
 #include "RenderSystem.h"
-#include "CircleComponents.h"
+#include "StatsSystem.h"
 
-#include "StatsEntity.h"
+#include "CircleComponents.h"
+#include "StatsComponent.h"
 
 int main()
 {
@@ -25,6 +27,7 @@ int main()
     // Register systems with the manager
     manager.addSystem<CircleMoveSystem>();
     manager.addSystem<RenderSystem>(&window);
+    manager.addSystem<StatsSystem>(&window);
 
     // Generate circle entities
     auto& rng = RandomNumberGenerator::getInstance();
@@ -43,6 +46,7 @@ int main()
         // scale the unit vector by velocity
         const sf::Vector2f velocity(cos(angle) * v, sin(angle) * v);
 
+        // --------------------------------
         // Create the entity and components
         auto entity = manager.createEntity();
 
@@ -63,8 +67,17 @@ int main()
         };
     }
 
-    // TODO: adapt StatsEntity to ECS
-    auto stats = new StatsEntity();
+    // Entity for stats display
+    auto statsEntity = manager.createEntity();
+    auto& statsComponent = manager.addComponent<StatsComponent>(statsEntity);
+
+    const auto success = statsComponent.font.loadFromFile("fonts/JetBrainsMono-Regular.ttf");
+	assert(success);
+
+	// configure the font
+	statsComponent.text.setFont(statsComponent.font);
+	statsComponent.text.setCharacterSize(24);
+	statsComponent.text.setFillColor(sf::Color::Yellow);
 
     sf::Clock clock;
     while (window.isOpen())
@@ -80,13 +93,9 @@ int main()
         }
 
         manager.update(dt.asSeconds());
-        stats->update(dt);
-        stats->draw(window);
 
         window.display();
     }
-
-    delete stats;
 
     return 0;
 }

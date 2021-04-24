@@ -19,10 +19,27 @@ public:
   ECSManager();
   ECSManager(ECSManager&) = delete;
 
-  EntityId createEntity();
-  // void removeEntity(EntityId id);
+  ~ECSManager();
 
+  // Update all systems
   void update(float deltaTime);
+
+  // Creates a new entity and returns its ID
+  EntityId createEntity();
+
+  // Removes the entity with the given ID and all its components
+  void removeEntity(EntityId id);
+
+  template<typename T, typename... ConstructorArgs>
+  T& addSystem(ConstructorArgs... args) {
+    T* system = new T(args...);
+    systems.push_back(system);
+
+    // Cache the component type IDs that the system handles
+    system->initialize();
+
+    return *system;
+  }
 
   template<typename T>
   T& addComponent(EntityId entityId) {
@@ -30,6 +47,7 @@ public:
     auto typeHash = typeid(T).hash_code();
     typesByEntity[entityId].insert(typeHash);
 
+    // Retrieve the component array for the component type and cast it to the right type or create a new one
     auto components = static_cast<ComponentVector<T, MAX_ENTITIES>*>(componentsByType[typeHash]);
     if (components == nullptr) {
       components = new ComponentVector<T, MAX_ENTITIES>();
@@ -43,22 +61,23 @@ public:
     return component;
   }
 
-  template<typename T, typename... ConstructorArgs>
-  T& addSystem(ConstructorArgs... args) {
-    std::shared_ptr<T> system = std::make_shared<T>(args...);
-    systems.push_back(system);
-
-    system->initialize();
-
-    return *system;
+  template<typename T>
+  void removeComponent(EntityId entityId) {
+    // TODO: implement
   }
 
   template<typename T>
   T& getComponent(EntityId entityId) {
+    // Get the hash code of the component type
     auto typeHash = typeid(T).hash_code();
+
+    // Get the component array for the type and retrieve the entity
     return static_cast<ComponentVector<T, MAX_ENTITIES>*>(componentsByType[typeHash])->getComponent(entityId);
   }
 
+  // Convenience templates for getting multiple components. Can be called with up to five type arguments.
+  // Supports C++17 structured bindings since it returns an std::tuple. Usage example:
+  // auto [transform, collision] = manager.getComponents<TransformComponent, CircleCollisionComponent>(entityId);
   template<typename T1, typename T2>
   std::tuple<T1&, T2&> getComponents(EntityId entityId) {
     return std::forward_as_tuple(getComponent<T1>(entityId), getComponent<T2>(entityId));
@@ -84,15 +103,18 @@ public:
 private:
   // The key is a hash of std::type_info
 	robin_hood::unordered_map<TypeHash, ComponentVectorBase*> componentsByType;
-	robin_hood::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
-  std::vector<std::shared_ptr<ECSSystem> > systems;
 
-  // Entities that need to be registered or unregistered with systems because
-  // components were added or removed
+  // Map of component types used by each entity to speed up registering entities with systems
+	robin_hood::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
+  std::vector<ECSSystem* > systems;
+
+  // Entities that need to be registered or unregistered with systems because components were added or removed
   std::set<EntityId> dirtyEntities;
 
+  // Incremented whenever an entity is created
   EntityId currentEntityId = 0;
 
+  // Updates the registration status of all dirty entities on all systems
   void updateEntityRegistration();
 
 };

@@ -4,6 +4,8 @@
 #include <set>
 #include <typeinfo>
 
+#include "robin_hood.h"
+
 typedef size_t TypeHash;
 typedef int EntityId;
 
@@ -15,28 +17,41 @@ public:
   ECSSystem();
   ECSSystem(ECSSystem&) = delete;
 
+  // Set of all types that the system handles
   virtual std::set<TypeHash> initializeTypeFilter() = 0;
 
+  // Internal initialization
   void initialize();
 
+  // Called on each frame on each system
 	virtual void onUpdate(ECSManager& manager, float deltaTime) = 0;
 
+  // Register an entity with the system (internal, called by ECSManager)
   void registerEntity(EntityId entityId);
 
+  // Register an entity with the system (internal, called by ECSManager)
+  void unregisterEntity(EntityId entityId);
+
+  // Fast access to the type filter (initializeTypeFilter creates the std::set on each call)
   inline std::set<TypeHash>& getTypeFilter() { return componentTypeFilter; }
+
+  // All entities that are handled by the system
   inline std::vector<EntityId>& getEntities() { return entities; }
   
 private:
   std::set<TypeHash> componentTypeFilter;
 
-  // Vector for fast iteration
+  // Two data structures to get the best of both worlds
+  // The vector can be iterated much faster than the map
   std::vector<EntityId> entities;
 
-  // Duplicate set for O(1) check if an entity is registered
-  std::set<EntityId> entitiesSet;
+  // Duplicate map for O(1) check if an entity is registered and O(1) deletion
+  robin_hood::unordered_map<EntityId, size_t> entityIdMap;
+  
 };
 
-// Helper macros for type filter
+// Helper macros for type filter.
+// Usage: ENTITY_TYPE_FILTER(ComponentType1, ComponentType2, ...), up to 5 arguments
 #ifndef ENTITY_TYPE_FILTER
   // Macro with a variable number of arguments, see https://stackoverflow.com/a/41177384
   #define NUM_ARGS_(_1, _2, _3, _4, _5, _6, TOTAL, ...) TOTAL

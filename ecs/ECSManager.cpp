@@ -4,16 +4,24 @@
 
 ECSManager::ECSManager() {}
 
+ECSManager::~ECSManager() {
+  // TODO: implement destructor and free memory
+  // Remove all entities etc.
+}
+
 EntityId ECSManager::createEntity() {
   auto entityId = ++currentEntityId;
   return entityId;
 }
 
+void ECSManager::removeEntity(EntityId id) {
+  // TODO: implement
+}
+
 void ECSManager::updateEntityRegistration() {
   for (auto& system: systems) {
     for (auto entityId: dirtyEntities) {
-      // The system should handle the entity if the entity contains components
-      // of every type that the system handles
+      // The system should handle the entity if the entity contains components of every type that the system handles
       auto& typeFilter = system->getTypeFilter();
       bool hasAllTypes = true;
 
@@ -26,8 +34,7 @@ void ECSManager::updateEntityRegistration() {
       if (hasAllTypes) {
         system->registerEntity(entityId);
       } else {
-        // TODO: support unregistering
-        // system->unregisterEntity(entityId);
+        system->unregisterEntity(entityId);
       }
     }
   }
@@ -40,6 +47,7 @@ void ECSManager::update(float deltaTime) {
     updateEntityRegistration();
   }
 
+  // Call the update method on all systems
   for (auto& system: systems) {
     system->onUpdate(*this, deltaTime);
   }
