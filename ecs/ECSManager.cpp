@@ -26,7 +26,8 @@ void ECSManager::updateEntityRegistration() {
       if (hasAllTypes) {
         system->registerEntity(entityId);
       } else {
-        system->unregisterEntity(entityId);
+        // TODO: support unregistering
+        // system->unregisterEntity(entityId);
       }
     }
   }

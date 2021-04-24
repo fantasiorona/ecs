@@ -5,7 +5,7 @@ import sys
 env = DefaultEnvironment(tools=['default', 'compilation_db'])
 
 if sys.platform.startswith('linux') or sys.platform == 'darwin':
-    env.Append(CXXFLAGS = '-std=c++17 -O3')
+    env.Append(CXXFLAGS = '-std=c++17 -O3 -D__GXX_MERGED_TYPEINFO_NAMES')
 else:
     host_platform = "Unknown platform: " + sys.platform
     exit(1)

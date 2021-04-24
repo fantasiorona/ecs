@@ -22,14 +22,18 @@ public:
 	virtual void onUpdate(ECSManager& manager, float deltaTime) = 0;
 
   void registerEntity(EntityId entityId);
-  void unregisterEntity(EntityId entityId);
 
   inline std::set<TypeHash>& getTypeFilter() { return componentTypeFilter; }
-  inline std::set<EntityId>& getEntities() { return entities; }
+  inline std::vector<EntityId>& getEntities() { return entities; }
   
 private:
   std::set<TypeHash> componentTypeFilter;
-  std::set<EntityId> entities;
+
+  // Vector for fast iteration
+  std::vector<EntityId> entities;
+
+  // Duplicate set for O(1) check if an entity is registered
+  std::set<EntityId> entitiesSet;
 };
 
 // Helper macros for type filter

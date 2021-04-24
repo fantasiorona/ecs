@@ -7,9 +7,9 @@ void ECSSystem::initialize() {
 }
 
 void ECSSystem::registerEntity(EntityId id) {
-  entities.insert(id);
+  if (entitiesSet.count(id) == 0) {
+    entitiesSet.insert(id);
+    entities.push_back(id);
+  }
 }
 
-void ECSSystem::unregisterEntity(EntityId id) {
-  entities.erase(id);
-}

@@ -19,7 +19,10 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "ECS Moving Circles");
 
+    // The ECSManager coordinates entities, components and systems
     ECSManager manager;
+
+    // Register systems with the manager
     manager.addSystem<CircleMoveSystem>();
     manager.addSystem<RenderSystem>(&window);
 
@@ -86,51 +89,6 @@ int main()
     }
 
     delete stats;
-
-    /*std::vector<Entity*> entities;
-
-    for (unsigned int i = 0; i < numEntities; ++i)
-    {
-        auto entity = CircleEntityGenerator::generateInBounds(bounds);
-        entities.push_back(entity);
-    }
-
-    auto stats = new StatsEntity();
-    entities.push_back(stats);
-	
-    sf::Clock clock;
-    while (window.isOpen())
-    {
-        const auto dt = clock.restart();
-    	
-        sf::Event event;
-
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        for (auto entity : entities)
-        {
-            entity->update(dt);
-        }
-
-        window.clear();
-
-        for (auto entity : entities)
-        {
-            entity->draw(window);
-        }
-    	
-        window.display();
-    }
-
-    for (auto entity : entities)
-    {
-        delete entity;
-    }
-    entities.clear();*/
 
     return 0;
 }
