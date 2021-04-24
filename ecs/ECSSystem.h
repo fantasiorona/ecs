@@ -4,6 +4,7 @@
 #include <set>
 #include <typeinfo>
 
+typedef size_t TypeHash;
 typedef int EntityId;
 
 class ECSManager; // Forward reference
@@ -14,7 +15,7 @@ public:
   ECSSystem();
   ECSSystem(ECSSystem&) = delete;
 
-  virtual std::set<const std::type_info*> initializeTypeFilter() = 0;
+  virtual std::set<TypeHash> initializeTypeFilter() = 0;
 
   void initialize();
 
@@ -22,11 +23,11 @@ public:
 
   void registerEntity(EntityId entityId);
 
-  inline std::set<const std::type_info*>& getTypeFilter() { return componentTypeFilter; }
+  inline std::set<TypeHash>& getTypeFilter() { return componentTypeFilter; }
   inline std::vector<EntityId>& getEntities() { return entities; }
   
 private:
-  std::set<const std::type_info*> componentTypeFilter;
+  std::set<TypeHash> componentTypeFilter;
 
   // Vector for fast iteration
   std::vector<EntityId> entities;
@@ -47,14 +48,14 @@ private:
 
   #define ENTITY_TYPE_FILTER(...) VA_MACRO(ENTITY_TYPE_FILTER, __VA_ARGS__)
 
-  #define ENTITY_TYPE_FILTER1(a) inline virtual std::set<const std::type_info*> initializeTypeFilter() override \
-    { return std::set<const std::type_info*>{&typeid(a)}; }
-  #define ENTITY_TYPE_FILTER2(a, b) inline virtual std::set<const std::type_info*> initializeTypeFilter() override \
-    { return std::set<const std::type_info*>{&typeid(a), &typeid(b)}; }
-  #define ENTITY_TYPE_FILTER3(a, b, c) inline virtual std::set<const std::type_info*> initializeTypeFilter() override \
-    { return std::set<const std::type_info*>{&typeid(a), &typeid(b), &typeid(c)}; }
-  #define ENTITY_TYPE_FILTER4(a, b, c, d) inline virtual std::set<const std::type_info*> initializeTypeFilter() override \
-    { return std::set<const std::type_info*>{&typeid(a), &typeid(b), &typeid(c), &typeid(d)}; }
-  #define ENTITY_TYPE_FILTER5(a, b, c, d, e) inline virtual std::set<const std::type_info*> initializeTypeFilter() override \
-    { return std::set<const std::type_info*>{&typeid(a), &typeid(b), &typeid(c), &typeid(d), &typeid(e)}; }
+  #define ENTITY_TYPE_FILTER1(a) inline virtual std::set<TypeHash> initializeTypeFilter() override \
+    { return std::set<TypeHash>{typeid(a).hash_code()}; }
+  #define ENTITY_TYPE_FILTER2(a, b) inline virtual std::set<TypeHash> initializeTypeFilter() override \
+    { return std::set<TypeHash>{typeid(a).hash_code(), typeid(b).hash_code()}; }
+  #define ENTITY_TYPE_FILTER3(a, b, c) inline virtual std::set<TypeHash> initializeTypeFilter() override \
+    { return std::set<TypeHash>{typeid(a).hash_code(), typeid(b).hash_code(), typeid(c).hash_code()}; }
+  #define ENTITY_TYPE_FILTER4(a, b, c, d) inline virtual std::set<TypeHash> initializeTypeFilter() override \
+    { return std::set<TypeHash>{typeid(a).hash_code(), typeid(b).hash_code(), typeid(c).hash_code(), typeid(d).hash_code()}; }
+  #define ENTITY_TYPE_FILTER5(a, b, c, d, e) inline virtual std::set<TypeHash> initializeTypeFilter() override \
+    { return std::set<TypeHash>{typeid(a).hash_code(), typeid(b).hash_code(), typeid(c).hash_code(), typeid(d).hash_code(), typeid(e).hash_code()}; }
 #endif
