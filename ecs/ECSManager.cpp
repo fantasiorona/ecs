@@ -17,8 +17,8 @@ void ECSManager::updateEntityRegistration() {
       auto& typeFilter = system->getTypeFilter();
       bool hasAllTypes = true;
 
-      for (auto& typeHash: typeFilter) {
-        if (typesByEntity[entityId].count(typeHash) <= 0) {
+      for (auto& typeInfo: typeFilter) {
+        if (typesByEntity[entityId].count(typeInfo) <= 0) {
           hasAllTypes = false;
         }
       }

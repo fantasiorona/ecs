@@ -7,8 +7,6 @@
 #include "ECSSystem.h"
 #include "ComponentVector.h"
 
-typedef size_t TypeHash;
-
 class ECSManager final
 {
 public:
@@ -22,13 +20,13 @@ public:
 
   template<typename T>
   T& addComponent(EntityId entityId) {
-    auto typeHash = typeid(T).hash_code();
-    typesByEntity[entityId].insert(typeHash);
+    auto typeInfo = &typeid(T);
+    typesByEntity[entityId].insert(typeInfo);
 
-    auto components = static_cast<ComponentVector<T>*>(componentsByType[typeHash]);
+    auto components = static_cast<ComponentVector<T>*>(componentsByType[typeInfo]);
     if (components == nullptr) {
       components = new ComponentVector<T>();
-      componentsByType[typeHash] = components;
+      componentsByType[typeInfo] = components;
     }
 
     auto& component = components->addComponent(entityId);
@@ -50,8 +48,8 @@ public:
 
   template<typename T>
   T& getComponent(EntityId entityId) {
-    auto typeHash = typeid(T).hash_code();
-    return static_cast<ComponentVector<T>*>(componentsByType[typeHash])->getComponent(entityId);
+    auto typeInfo = &typeid(T);
+    return static_cast<ComponentVector<T>*>(componentsByType[typeInfo])->getComponent(entityId);
   }
 
   template<typename T1, typename T2>
@@ -78,8 +76,8 @@ public:
 
 private:
   // The key is a hash of std::type_info
-	std::unordered_map<TypeHash, ComponentVectorBase*> componentsByType;
-	std::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
+	std::unordered_map<const std::type_info*, ComponentVectorBase*> componentsByType;
+	std::unordered_map<EntityId, std::set<const std::type_info*> > typesByEntity;
   std::vector<std::shared_ptr<ECSSystem> > systems;
 
   // Entities that need to be registered or unregistered with systems because
