@@ -88,6 +88,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +104,7 @@
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,21 +151,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MovingCircleEntity.cpp" />
-    <ClCompile Include="CircleEntityGenerator.cpp" />
+    <ClCompile Include="CircleMoveSystem.cpp" />
+    <ClCompile Include="ECSManager.cpp" />
+    <ClCompile Include="ECSSystem.cpp" />
     <ClCompile Include="ColorPicker.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StatsEntity.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="StatsSystem.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="VectorMath.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MovingCircleEntity.h" />
-    <ClInclude Include="CircleEntityGenerator.h" />
+    <ClInclude Include="CircleComponents.h" />
+    <ClInclude Include="CircleMoveSystem.h" />
+    <ClInclude Include="ComponentVector.h" />
+    <ClInclude Include="ECSManager.h" />
+    <ClInclude Include="ECSSystem.h" />
     <ClInclude Include="ColorPicker.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="StatsEntity.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="robin_hood.h" />
+    <ClInclude Include="StatsComponent.h" />
+    <ClInclude Include="StatsSystem.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VectorMath.h" />
     <ClInclude Include="RandomNumberGenerator.h" />

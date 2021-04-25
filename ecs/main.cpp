@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <cassert>
 
 #include "RandomNumberGenerator.h"
 #include "ColorPicker.h"

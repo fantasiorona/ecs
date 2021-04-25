@@ -11,17 +11,23 @@
     <ClCompile Include="VectorMath.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="CircleEntityGenerator.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingCircleEntity.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="StatsEntity.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleMoveSystem.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ECSManager.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ECSSystem.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="StatsSystem.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,17 +51,35 @@
     <ClInclude Include="VectorMath.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="CircleEntityGenerator.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="MovingCircleEntity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="StatsEntity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleComponents.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleMoveSystem.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentVector.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ECSManager.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ECSSystem.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="robin_hood.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsComponent.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsSystem.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
