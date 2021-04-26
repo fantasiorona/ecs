@@ -10,7 +10,7 @@ void StatsSystem::onUpdate(ECSManager& manager, float deltaTime) {
     auto& stats = manager.getComponent<StatsComponent>(entity);
 
     // we output frametime in milliseconds
-	  // 16 ms -> 60 frames per second, our gold standard
+	// 16 ms -> 60 frames per second, our gold standard
     const auto text = "frametime: " + std::to_string((int) (deltaTime * 1000)) + " ms";
     stats.text.setString(text);
 

@@ -17,6 +17,6 @@ public:
   */
   ENTITY_TYPE_FILTER(TransformComponent, CircleCollisionComponent)
 
-	virtual void onUpdate(ECSManager& manager, float deltaTime) override;
+  virtual void onUpdate(ECSManager& manager, float deltaTime) override;
 
 };

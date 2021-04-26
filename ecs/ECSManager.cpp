@@ -5,8 +5,18 @@
 ECSManager::ECSManager() {}
 
 ECSManager::~ECSManager() {
-  // TODO: implement destructor and free memory
-  // Remove all entities etc.
+  // Remove all entities
+  for (int i = 1; i <= currentEntityId; i++) {
+    if (!typesByEntity[i].empty()) { 
+        removeEntity(i);
+    }
+  }
+
+  // Delete all systems
+  for (auto& system : systems) {
+      delete system;
+  }
+  systems.clear();
 }
 
 EntityId ECSManager::createEntity() {
@@ -15,7 +25,17 @@ EntityId ECSManager::createEntity() {
 }
 
 void ECSManager::removeEntity(EntityId id) {
-  // TODO: implement
+  // remove the entitys components
+  for (auto& typeHash : typesByEntity[id]) {
+      componentsByType[typeHash]->removeComponent(id);
+  }
+  typesByEntity[id].clear();
+
+  // unregister entity from systems
+  //for (auto& system : systems) {
+  //    system->unregisterEntity(id);
+  //}
+  dirtyEntities.insert(id); 
 }
 
 void ECSManager::updateEntityRegistration() {
@@ -38,7 +58,6 @@ void ECSManager::updateEntityRegistration() {
       }
     }
   }
-
   dirtyEntities.clear();
 } 
 

@@ -24,12 +24,12 @@ public:
   void initialize();
 
   // Called on each frame on each system
-	virtual void onUpdate(ECSManager& manager, float deltaTime) = 0;
+  virtual void onUpdate(ECSManager& manager, float deltaTime) = 0;
 
   // Register an entity with the system (internal, called by ECSManager)
   void registerEntity(EntityId entityId);
 
-  // Register an entity with the system (internal, called by ECSManager)
+  // Unregister an entity with the system (internal, called by ECSManager)
   void unregisterEntity(EntityId entityId);
 
   // Fast access to the type filter (initializeTypeFilter creates the std::set on each call)

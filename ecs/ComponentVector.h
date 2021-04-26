@@ -25,7 +25,7 @@ public:
   }
 
   virtual void removeComponent(EntityId id) override {
-    // TODO: implement
+    components[id].~T();
   }
 
   T& getComponent(EntityId entityId) {

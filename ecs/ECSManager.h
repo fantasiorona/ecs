@@ -63,7 +63,14 @@ public:
 
   template<typename T>
   void removeComponent(EntityId entityId) {
-    // TODO: implement
+    // Get the hash code of the component type
+    auto typeHash = typeid(T).hash_code();
+    
+    // Get the component array for the type and remove the entity
+    static_cast<ComponentVector<T, MAX_ENTITIES>*>(componentsByType[typeHash])->removeComponent(entityId);
+
+    // Mark the entity as dirty to unregister it with systems later
+    dirtyEntities.insert(entityId);
   }
 
   template<typename T>
@@ -102,11 +109,12 @@ public:
 
 private:
   // The key is a hash of std::type_info
-	robin_hood::unordered_map<TypeHash, ComponentVectorBase*> componentsByType;
+  robin_hood::unordered_map<TypeHash, ComponentVectorBase*> componentsByType;
 
   // Map of component types used by each entity to speed up registering entities with systems
-	robin_hood::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
+  robin_hood::unordered_map<EntityId, std::set<TypeHash> > typesByEntity;
   
+  // Vector of Systems
   std::vector<ECSSystem* > systems;
 
   // Entities that need to be registered or unregistered with systems because components were added or removed

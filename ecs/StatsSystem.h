@@ -13,7 +13,7 @@ public:
 
   StatsSystem(sf::RenderWindow* window);
 
-	virtual void onUpdate(ECSManager& manager, float deltaTime) override;
+  virtual void onUpdate(ECSManager& manager, float deltaTime) override;
 
 private:
   sf::RenderWindow* window;

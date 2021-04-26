@@ -17,17 +17,17 @@
     <ClCompile Include="CircleMoveSystem.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="ECSManager.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="ECSSystem.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="StatsSystem.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ECSManager.cpp">
+      <Filter>ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="ECSSystem.cpp">
+      <Filter>ecs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,11 +37,11 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{27002b94-2cb3-4378-a4f8-79177b7c372b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ecs">
+      <UniqueIdentifier>{eda0f78d-eba7-4ad6-b904-2b2c65e1f6d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="ColorPicker.h">
       <Filter>Helpers</Filter>
     </ClInclude>
@@ -60,15 +60,6 @@
     <ClInclude Include="CircleMoveSystem.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentVector.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="ECSManager.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="ECSSystem.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="RenderSystem.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -80,6 +71,15 @@
     </ClInclude>
     <ClInclude Include="StatsSystem.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ECSManager.h">
+      <Filter>ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ECSSystem.h">
+      <Filter>ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentVector.h">
+      <Filter>ecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ public:
 
   RenderSystem(sf::RenderWindow* window);
 
-	virtual void onUpdate(ECSManager& manager, float deltaTime) override;
+  virtual void onUpdate(ECSManager& manager, float deltaTime) override;
 
 private:
   static const size_t _kNumVertices = 4;
