@@ -5,7 +5,7 @@
 ECSManager::ECSManager() {}
 
 ECSManager::~ECSManager() {
-  // Remove all entities
+  // Remove all entities and thier components
   for (int i = 1; i <= currentEntityId; i++) {
     if (!typesByEntity[i].empty()) { 
         removeEntity(i);
@@ -25,17 +25,11 @@ EntityId ECSManager::createEntity() {
 }
 
 void ECSManager::removeEntity(EntityId id) {
-  // remove the entitys components
+  // remove the entitys components, it will be added to dirtyEntities for removal in removeComponent
   for (auto& typeHash : typesByEntity[id]) {
       componentsByType[typeHash]->removeComponent(id);
   }
   typesByEntity[id].clear();
-
-  // unregister entity from systems
-  //for (auto& system : systems) {
-  //    system->unregisterEntity(id);
-  //}
-  dirtyEntities.insert(id); 
 }
 
 void ECSManager::updateEntityRegistration() {
