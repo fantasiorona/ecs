@@ -25,11 +25,15 @@ EntityId ECSManager::createEntity() {
 }
 
 void ECSManager::removeEntity(EntityId id) {
-  // remove the entitys components, it will be added to dirtyEntities for removal in removeComponent
+  // remove the entitys components
   for (auto& typeHash : typesByEntity[id]) {
       componentsByType[typeHash]->removeComponent(id);
   }
   typesByEntity[id].clear();
+
+  // Mark the entity as dirty to unregister it with systems later
+  // Necessary since the entity might not have any components and therefore removeComponent might not get called
+  dirtyEntities.insert(id);
 }
 
 void ECSManager::updateEntityRegistration() {
