@@ -19,7 +19,7 @@
 * In release build the old code ran smoothly with 33ms when there were 100.000 entities,
 * whilst the new code could handle 155000 entites. There was a 55% improvement.
 * 
-* Intel Core i7-8550U CPU @ 1.80GHz 1.99 GHz
+* Intel Core i7-8550U CPU @ 1.80GHz
 * In release build the old code ran smoothly with 33ms when there were 85.000 entities,
 * whilst the new code could handle 135000 entites. There was a 58% improvement.
 */
